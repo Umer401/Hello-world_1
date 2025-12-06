@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Run Jenkinsfile CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  jenkinsfile-run:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jenkinsci/jenkinsfile-runner:master
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Jenkinsfile using Jenkinsfile Runner
+        uses: jenkinsci/jfr-container-action@master
+        with:
+          command: run
+          jenkinsfile: Jenkinsfile
+          pluginstxt: plugins.txt
+          jcasc: jcasc.yml   # remove if not using JCasC
